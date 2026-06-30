@@ -11,7 +11,7 @@ let firebaseAdmin = null;
 if (fs.existsSync(resolvedPath)) {
   try {
     admin.initializeApp({
-      credential: admin.credential.cert(require(resolvedPath)),
+      credential: admin.cert(require(resolvedPath)),
     });
     firebaseAdmin = admin;
     console.log('🔥 Firebase Admin initialized successfully.');
