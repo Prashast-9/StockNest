@@ -6,15 +6,15 @@
 (function () {
   'use strict';
 
-  // Firebase configuration placeholder
-  // TODO: Replace with your actual Firebase project web configuration keys
+  // Firebase configuration keys
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCk7k-WWqzSL-ZOvjh2rT57z6yW_Go24LM",
+    authDomain: "stocknest-19df9.firebaseapp.com",
+    projectId: "stocknest-19df9",
+    storageBucket: "stocknest-19df9.firebasestorage.app",
+    messagingSenderId: "43440848896",
+    appId: "1:43440848896:web:da0f759449e9e1a75998e5",
+    measurementId: "G-RY7B7FDCEL"
   };
 
   // Initialize Firebase if loaded and config is populated
