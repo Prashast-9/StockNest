@@ -5,7 +5,8 @@ require('dotenv').config();
 // Initialize Firebase Admin at startup
 require('./config/firebase');
 
-const authRoutes = require('./routes/authRoutes');
+const authRoutes                        = require('./routes/authRoutes');
+const { assetsRouter, maintenanceRouter } = require('./routes/assets');
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -15,7 +16,9 @@ app.use(cors());
 app.use(express.json());
 
 // ── Routes ────────────────────────────────────
-app.use('/api/auth', authRoutes);
+app.use('/api/auth',        authRoutes);
+app.use('/api/assets',      assetsRouter);
+app.use('/api/maintenance', maintenanceRouter);
 
 // Health check — useful for Render deployment
 app.get('/health', (req, res) => {
