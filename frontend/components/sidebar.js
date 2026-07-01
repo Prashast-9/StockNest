@@ -1,15 +1,18 @@
 /**
  * StockNest — Reusable Sidebar Component
- * Usage: import { renderSidebar } from './components/sidebar.js';
- *        renderSidebar(document.getElementById('sidebar-root'), { activeItem: 'room-booking' });
  */
 
-/** Maps nav item ids to page URLs (others use "#" until built). */
+/** Maps nav item ids to page URLs. */
 const NAV_ROUTES = {
+  'dashboard': 'dashboard.html',
+  'setup-locations': 'organisation_page_html.html',
   'asset-registry': 'asset_registry.html',
   'inventory-management': 'inventory.html',
+  'maintenance': 'maintainance_page_index.html',
   'room-booking': 'room-booking.html',
   'room-allocation-transfer': 'allocation.html',
+  'analytics-reporting': '#',
+  'settings': '#',
 };
 
 const NAV_ITEMS = [
@@ -60,34 +63,49 @@ const NAV_ITEMS = [
   },
 ];
 
+/** Detect active nav item from current page filename. */
+export function detectActiveItem() {
+  const page = window.location.pathname.split('/').pop() || 'dashboard.html';
+  const map = {
+    'dashboard.html': 'dashboard',
+    'organisation_page_html.html': 'setup-locations',
+    'asset_registry.html': 'asset-registry',
+    'inventory.html': 'inventory-management',
+    'maintainance_page_index.html': 'maintenance',
+    'room-booking.html': 'room-booking',
+    'allocation.html': 'room-allocation-transfer',
+  };
+  return map[page] || 'dashboard';
+}
+
 /**
  * Renders the sidebar into the given container element.
- * @param {HTMLElement} container - Mount point for the sidebar
- * @param {{ activeItem?: string }} options - activeItem matches a nav item id
+ * @param {HTMLElement} container
+ * @param {{ activeItem?: string, location?: string }} options
  */
-export function renderSidebar(container, { activeItem = 'room-booking', location = 'HQ Alpha' } = {}) {
-  const navLinks = NAV_ITEMS.map(
-    (item) => {
-      const href = NAV_ROUTES[item.id] || '#';
-      return `
+export function renderSidebar(container, { activeItem, location = 'HQ Alpha' } = {}) {
+  const current = activeItem || detectActiveItem();
+
+  const navLinks = NAV_ITEMS.map((item) => {
+    const href = NAV_ROUTES[item.id] || '#';
+    return `
       <li class="sidebar__nav-item">
         <a href="${href}"
-           class="sidebar__nav-link${item.id === activeItem ? ' sidebar__nav-link--active' : ''}"
+           class="sidebar__nav-link${item.id === current ? ' sidebar__nav-link--active' : ''}"
            data-nav="${item.id}"
-           aria-current="${item.id === activeItem ? 'page' : 'false'}">
+           aria-current="${item.id === current ? 'page' : 'false'}">
           ${item.icon}
           <span class="sidebar__nav-label">${item.label}</span>
         </a>
       </li>`;
-    }
-  ).join('');
+  }).join('');
 
   container.innerHTML = `
     <nav class="sidebar" aria-label="Main navigation">
-      <div class="sidebar__brand">
+      <a href="dashboard.html" class="sidebar__brand sidebar__brand-link" aria-label="StockNest home">
         <h1 class="sidebar__logo">StockNest</h1>
         <p class="sidebar__subtitle">Workspace Inventory</p>
-      </div>
+      </a>
 
       <div class="sidebar__location">
         <label class="sidebar__location-label" for="sidebar-location">Location</label>
@@ -108,36 +126,53 @@ export function renderSidebar(container, { activeItem = 'room-booking', location
       </ul>
 
       <div class="sidebar__footer">
-        <button type="button" class="sidebar__switch-btn">
+        <button type="button" class="sidebar__switch-btn" id="sidebarSwitchBtn">
           <svg class="sidebar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
           Switch Location
         </button>
-        <a href="#" class="sidebar__help-link">Help Center</a>
+        <a href="#" class="sidebar__help-link" id="sidebarHelpLink">Help Center</a>
       </div>
     </nav>`;
 }
 
 /**
- * Attaches click handlers to toggle the active nav state.
- * Call after renderSidebar().
- * @param {HTMLElement} container - The sidebar root element
+ * Attaches navigation handlers for placeholder routes and footer actions.
+ * @param {HTMLElement} container
  */
 export function initSidebarNav(container) {
   const links = container.querySelectorAll('.sidebar__nav-link');
 
   links.forEach((link) => {
     link.addEventListener('click', (e) => {
-      const href = link.getAttribute('href');
-      // Allow navigation for real page links; toggle active only for placeholders
-      if (href && href !== '#') return;
+      const navId = link.dataset.nav;
 
-      e.preventDefault();
-      links.forEach((l) => {
-        l.classList.remove('sidebar__nav-link--active');
-        l.setAttribute('aria-current', 'false');
-      });
-      link.classList.add('sidebar__nav-link--active');
-      link.setAttribute('aria-current', 'page');
+      if (navId === 'analytics-reporting') {
+        e.preventDefault();
+        alert('Analytics page coming soon');
+        return;
+      }
+
+      if (navId === 'settings') {
+        e.preventDefault();
+        alert('Settings page coming soon');
+      }
     });
   });
+
+  const helpLink = container.querySelector('#sidebarHelpLink');
+  if (helpLink) {
+    helpLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Help Center — contact admin@stocknest.io for support.');
+    });
+  }
+
+  const switchBtn = container.querySelector('#sidebarSwitchBtn');
+  const locationSelect = container.querySelector('#sidebar-location');
+  if (switchBtn && locationSelect) {
+    switchBtn.addEventListener('click', () => {
+      locationSelect.focus();
+      locationSelect.click();
+    });
+  }
 }

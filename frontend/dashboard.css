@@ -106,7 +106,9 @@ a:hover { text-decoration: underline; }
 
 .sidebar__logo svg { width: 20px; height: 20px; color: #fff; }
 
-.sidebar__brand { display: flex; flex-direction: column; min-width: 0; }
+.sidebar__brand { display: flex; align-items: center; gap: 12px; min-width: 0; text-decoration: none; color: inherit; flex: 1; }
+.sidebar__brand:hover { opacity: 0.92; }
+.sidebar__brand-text { display: flex; flex-direction: column; min-width: 0; }
 
 .sidebar__title {
   font-size: 15px;
