@@ -283,7 +283,7 @@
         if (!name || !name.trim()) return;
 
         const condition = prompt('Enter Condition Level (0-100):', '100');
-        const value = prompt('Enter Current Value ($):', '1000');
+        const value = prompt('Enter Current Value (₹):', '1000');
 
         createAsset(name, condition, value);
       });
