@@ -2,8 +2,7 @@ const express = require('express');
 const cors    = require('cors');
 require('dotenv').config();
 
-// Initialize Firebase Admin at startup
-require('./config/firebase');
+
 
 const authRoutes                        = require('./routes/authRoutes');
 const { assetsRouter, maintenanceRouter } = require('./routes/assets');
