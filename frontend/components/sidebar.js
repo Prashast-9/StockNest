@@ -6,6 +6,8 @@
 
 /** Maps nav item ids to page URLs (others use "#" until built). */
 const NAV_ROUTES = {
+  'asset-registry': 'asset_registry.html',
+  'inventory-management': 'inventory.html',
   'room-booking': 'room-booking.html',
   'room-allocation-transfer': 'allocation.html',
 };
