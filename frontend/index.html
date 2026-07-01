@@ -1,148 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="StockNest — Secure workspace and inventory management for modern teams.">
-  <title>Login | StockNest</title>
-
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="login.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance Management - StockNest</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <main class="login-page" role="main">
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-title">Maintenance Management</div>
+    <div class="topbar-code">&lt;/&gt;</div>
+  </header>
 
-    <!-- Left: branding / hero image (hidden below 1024px) -->
-    <section class="login-hero" aria-hidden="true">
-      <img
-        class="login-hero__image"
-        src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80"
-        alt=""
-        loading="eager"
-        decoding="async"
-      >
-      <div class="login-hero__overlay"></div>
-    </section>
+  <div class="app">
 
-    <!-- Right: login form -->
-    <section class="login-panel">
-      <div class="login-card">
+    <!-- Main Content -->
+    <main class="main">
 
-        <header class="login-card__header">
-          <h1 class="login-card__title">StockNest</h1>
-          <p class="login-card__subtitle">Empowering Productive Workspaces.</p>
-        </header>
+      <!-- Search row -->
+      <div class="search-row">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search inventory, assets, tickets...">
+          <span class="kbd">⌘K</span>
+        </div>
+        <div class="icon-btn-wrap">
+          <button class="quick-add" id="quickAddBtn">+ Quick Add</button>
+          <div class="dropdown" id="quickAddDropdown">
+            <button class="dropdown-item" data-quick="asset">📦 New Asset</button>
+            <button class="dropdown-item" data-quick="ticket">🛠 New Maintenance Ticket</button>
+            <button class="dropdown-item" data-quick="booking">🚪 New Room Booking</button>
+          </div>
+        </div>
 
-        <form class="login-form" id="loginForm" novalidate>
-
-          <!-- Email or phone -->
-          <div class="form-group">
-            <label class="form-label" for="emailOrPhone">Email or phone</label>
-            <div class="input-wrapper">
-              <span class="input-icon" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-              </span>
-              <input
-                type="text"
-                id="emailOrPhone"
-                name="emailOrPhone"
-                class="form-input"
-                placeholder="name@company.com"
-                autocomplete="username"
-                required
-              >
+        <div class="icon-btn-wrap">
+          <button class="icon-btn" id="notifBtn">🔔<span class="notif-dot"></span></button>
+          <div class="dropdown notif-dropdown" id="notifDropdown">
+            <div class="dropdown-title">Notifications</div>
+            <div class="notif-item">
+              <span class="notif-icon">🛠</span>
+              <div>
+                <div class="notif-text"><strong>PRN-012</strong> service due tomorrow</div>
+                <div class="notif-time">2 hours ago</div>
+              </div>
             </div>
-          </div>
-
-          <!-- Password -->
-          <div class="form-group">
-            <div class="form-label-row">
-              <label class="form-label" for="password">Password</label>
-              <a href="#" class="form-link">Forgot?</a>
+            <div class="notif-item">
+              <span class="notif-icon">✅</span>
+              <div>
+                <div class="notif-text">Ticket <strong>CFE-003</strong> was scheduled</div>
+                <div class="notif-time">Yesterday</div>
+              </div>
             </div>
-            <div class="input-wrapper">
-              <span class="input-icon" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-              </span>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                class="form-input form-input--password"
-                placeholder="••••••••"
-                autocomplete="current-password"
-                required
-              >
-              <button
-                type="button"
-                class="password-toggle"
-                id="passwordToggle"
-                aria-label="Show password"
-                aria-pressed="false"
-              >
-                <!-- Eye (show) icon -->
-                <svg class="icon-eye" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-                <!-- Eye-off (hide) icon -->
-                <svg class="icon-eye-off" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                  <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-                  <line x1="1" y1="1" x2="23" y2="23"/>
-                </svg>
-              </button>
-            </div>
+            <a href="#" class="view-all notif-view-all">View all notifications →</a>
           </div>
+        </div>
 
-          <!-- Remember me -->
-          <div class="form-group form-group--checkbox">
-            <label class="checkbox-label">
-              <input type="checkbox" id="rememberMe" name="rememberMe" class="checkbox-input">
-              <span class="checkbox-custom" aria-hidden="true"></span>
-              <span class="checkbox-text">Remember me</span>
-            </label>
+        <div class="icon-btn-wrap">
+          <div class="avatar" id="avatarBtn"></div>
+          <div class="dropdown avatar-dropdown" id="avatarDropdown">
+            <button class="dropdown-item">👤 My Profile</button>
+            <button class="dropdown-item">⚙️ Account Settings</button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item logout">🚪 Log Out</button>
           </div>
-
-          <!-- Submit -->
-          <button type="submit" class="btn-primary">
-            Login to StockNest
-            <span class="btn-arrow" aria-hidden="true">→</span>
-          </button>
-
-        </form>
-
-        <hr class="login-divider">
-
-        <p class="login-signup">
-          Need an account?
-          <a href="#" class="form-link">Contact Administrator</a>
-        </p>
-
-        <footer class="login-footer">
-          <p class="login-footer__tagline">Secure Workspace Management for Modern Teams</p>
-          <div class="status-badge" role="status">
-            <span class="status-badge__dot" aria-hidden="true"></span>
-            <span class="status-badge__text">SYS: SECURE • V 2.4.1</span>
-          </div>
-        </footer>
-
+        </div>
       </div>
-    </section>
 
-  </main>
+      <!-- Page header -->
+      <div class="page-header">
+        <div>
+          <h1>Maintenance Center</h1>
+          <p>Track schedules, report issues, and monitor asset health.</p>
+        </div>
+        <div class="icon-btn-wrap">
+          <button class="export-btn" id="exportBtn">⭳ Export Log</button>
+          <div class="dropdown export-dropdown" id="exportDropdown">
+            <button class="dropdown-item" data-export="csv">📄 Export as CSV</button>
+            <button class="dropdown-item" data-export="pdf">📕 Export as PDF</button>
+          </div>
+        </div>
+      </div>
 
-  <script src="login.js"></script>
+      <!-- Content grid -->
+      <div class="content-grid">
+
+        <!-- Report Issue Card -->
+        <section class="card report-issue">
+          <div class="card-header">
+            <h2>Report Issue</h2>
+            <span class="refresh-icon" id="refreshBtn">🔄</span>
+          </div>
+
+          <label class="field-label">Asset ID / Name</label>
+          <input type="text" class="text-input" placeholder="e.g. PRN-004 or 3D Printer">
+
+          <label class="field-label">Priority Level</label>
+          <div class="priority-group">
+            <button class="priority-btn critical">Critical</button>
+            <button class="priority-btn high active">High</button>
+            <button class="priority-btn low">Low</button>
+          </div>
+          <div class="sla-note">Est. SLA: <strong>24 Hours</strong></div>
+
+          <label class="field-label">Description</label>
+          <textarea class="text-area" placeholder="Describe the problem..."></textarea>
+
+          <button class="submit-btn">▷ Submit Ticket</button>
+        </section>
+
+        <!-- Right column -->
+        <div class="right-col">
+
+          <!-- Upcoming Service -->
+          <section class="card upcoming-service">
+            <div class="card-header">
+              <h2>Upcoming Service</h2>
+              <a href="#" class="view-all" id="viewAllLink">View All →</a>
+            </div>
+
+            <table class="service-table">
+              <thead>
+                <tr>
+                  <th>Asset ID &amp; Name</th>
+                  <th>Service Type</th>
+                  <th>Scheduled Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="asset-cell">
+                    <span class="asset-icon">🖨</span>
+                    <div>
+                      <div class="asset-id">PRN-012</div>
+                      <div class="asset-name">Kyocera TaskAlfa</div>
+                    </div>
+                  </td>
+                  <td>Preventative</td>
+                  <td>Oct 24, 2023</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td class="action-cell">
+                    <div class="icon-btn-wrap">
+                      <button class="dots-btn" data-row="PRN-012">⋮</button>
+                      <div class="dropdown row-dropdown">
+                        <button class="dropdown-item" data-action="edit" data-asset="PRN-012">✏️ Edit</button>
+                        <button class="dropdown-item" data-action="reschedule" data-asset="PRN-012">📅 Reschedule</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item danger" data-action="delete" data-asset="PRN-012">🗑 Delete</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="asset-cell">
+                    <span class="asset-icon">📺</span>
+                    <div>
+                      <div class="asset-id">CFE-003</div>
+                      <div class="asset-name">Jura Giga X8</div>
+                    </div>
+                  </td>
+                  <td>Deep Clean</td>
+                  <td>Oct 26, 2023</td>
+                  <td><span class="status scheduled">Scheduled</span></td>
+                  <td class="action-cell">
+                    <div class="icon-btn-wrap">
+                      <button class="dots-btn" data-row="CFE-003">⋮</button>
+                      <div class="dropdown row-dropdown">
+                        <button class="dropdown-item" data-action="edit" data-asset="CFE-003">✏️ Edit</button>
+                        <button class="dropdown-item" data-action="reschedule" data-asset="CFE-003">📅 Reschedule</button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item danger" data-action="delete" data-asset="CFE-003">🗑 Delete</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Asset Health Overview -->
+          <section class="card asset-health">
+            <div class="card-header">
+              <div>
+                <h2>Asset Health Overview</h2>
+                <p class="subtext">Expected lifespan vs. current age across categories.</p>
+              </div>
+              <div class="icon-btn-wrap">
+                <button class="categories-btn" id="categoriesBtn">All Categories ▾</button>
+                <div class="dropdown categories-dropdown" id="categoriesDropdown">
+                  <button class="dropdown-item active" data-category="all">All Categories</button>
+                  <button class="dropdown-item" data-category="printers">Printers</button>
+                  <button class="dropdown-item" data-category="appliances">Appliances</button>
+                  <button class="dropdown-item" data-category="electronics">Electronics</button>
+                  <button class="dropdown-item" data-category="furniture">Furniture</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="chart">
+              <div class="bar-wrap">
+                <div class="bar">
+                  <div class="bar-fill blue" style="height:55%"></div>
+                  <div class="bar-fill blue-light" style="height:25%"></div>
+                </div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar">
+                  <div class="bar-fill blue" style="height:20%"></div>
+                  <div class="bar-fill yellow" style="height:20%"></div>
+                </div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar">
+                  <div class="bar-fill blue" style="height:65%"></div>
+                  <div class="bar-fill blue-light" style="height:15%"></div>
+                </div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar">
+                  <div class="bar-fill pink" style="height:25%"></div>
+                </div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar">
+                  <div class="bar-fill blue" style="height:30%"></div>
+                  <div class="bar-fill blue-light" style="height:45%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="chart-baseline"></div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Reschedule Modal -->
+  <div class="modal-overlay" id="rescheduleModal">
+    <div class="modal">
+      <h3>Reschedule Service</h3>
+      <p class="modal-sub">Asset: <strong id="rescheduleAssetName">-</strong></p>
+      <label class="field-label">New Date</label>
+      <input type="date" class="text-input" id="rescheduleDate">
+      <div class="modal-actions">
+        <button class="btn-secondary" id="rescheduleCancel">Cancel</button>
+        <button class="btn-primary" id="rescheduleConfirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <h3>Delete Service Entry</h3>
+      <p class="modal-sub">Are you sure you want to delete <strong id="deleteAssetName">-</strong>? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="deleteCancel">Cancel</button>
+        <button class="btn-danger" id="deleteConfirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <h3>Edit Service Entry</h3>
+      <p class="modal-sub">Asset: <strong id="editAssetName">-</strong></p>
+      <label class="field-label">Service Type</label>
+      <input type="text" class="text-input" id="editServiceType" placeholder="e.g. Preventative">
+      <label class="field-label">Status</label>
+      <select class="text-input" id="editStatus">
+        <option value="pending">Pending</option>
+        <option value="scheduled">Scheduled</option>
+      </select>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="editCancel">Cancel</button>
+        <button class="btn-primary" id="editSave">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
