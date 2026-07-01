@@ -119,6 +119,17 @@ ul {
   margin-bottom: 0;
 }
 
+.sidebar__brand-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity var(--transition);
+}
+
+.sidebar__brand-link:hover {
+  opacity: 0.9;
+}
+
 .sidebar__location {
   padding: 16px 12px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
