@@ -245,6 +245,19 @@
   function switchModule(moduleId) {
     currentModule = moduleId;
 
+    // Define the actual routes available in the app
+    const NAV_ROUTES = {
+      'asset-registry': 'asset_registry.html',
+      'inventory-management': 'inventory.html',
+      'room-booking': 'room-booking.html',
+      'room-allocation': 'allocation.html',
+    };
+
+    if (NAV_ROUTES[moduleId]) {
+      window.location.href = NAV_ROUTES[moduleId];
+      return;
+    }
+
     $$('.sidebar__nav-btn').forEach((btn) => {
       btn.classList.toggle('sidebar__nav-btn--active', btn.dataset.module === moduleId);
     });
