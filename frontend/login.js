@@ -47,6 +47,6 @@
     }
 
     // TODO: Connect to StockNest auth API (e.g. POST /api/auth/login)
-    console.log('Login attempt:', { emailOrPhone, rememberMe });
+    window.location.href = 'dashboard.html';
   });
 })();
