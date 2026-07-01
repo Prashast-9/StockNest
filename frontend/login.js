@@ -114,8 +114,8 @@
 
       console.log('Logged in user:', data.user);
       
-      // Redirect after a short delay (e.g. 1 second)
-      // setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
+      // Redirect to the dashboard
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
     } catch (err) {
       showAlert(err.message);
     } finally {
@@ -175,8 +175,8 @@
 
         console.log('Logged in user via Google:', data.user);
         
-        // Redirect after a short delay (e.g. 1 second)
-        // setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
+        // Redirect to the dashboard
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
       } catch (err) {
         console.error('Google Sign-in error:', err);
         showAlert(err.message || 'An error occurred during Google Sign-in.');

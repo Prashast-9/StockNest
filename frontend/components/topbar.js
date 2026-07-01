@@ -9,7 +9,7 @@
  * @param {HTMLElement} container - Mount point for the top bar
  * @param {{ userInitials?: string, userName?: string }} options
  */
-export function renderTopbar(container, { userInitials = 'NY', userName = 'Neha Yadav' } = {}) {
+export function renderTopbar(container, { userInitials = 'NY', userName = 'Neha Yadav', searchPlaceholder = 'Search rooms, assets, or bookings (Cmd+K)' } = {}) {
   container.innerHTML = `
     <header class="topbar" role="banner">
       <div class="topbar__search-wrap">
@@ -20,8 +20,8 @@ export function renderTopbar(container, { userInitials = 'NY', userName = 'Neha 
           type="search"
           id="global-search"
           class="topbar__search"
-          placeholder="Search rooms, assets, or bookings (Cmd+K)"
-          aria-label="Search rooms, assets, or bookings"
+          placeholder="${searchPlaceholder}"
+          aria-label="${searchPlaceholder}"
         />
       </div>
 
