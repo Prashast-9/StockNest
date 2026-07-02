@@ -6,6 +6,7 @@ const authRoutes                        = require('./routes/authRoutes');
 const dashboardRoutes                   = require('./routes/dashboardRoutes');
 const organizationRoutes                = require('./routes/organizationRoutes');
 const { assetsRouter, maintenanceRouter } = require('./routes/assets');
+const inventoryRoutes                   = require('./routes/inventoryRoutes');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/api/dashboard',     dashboardRoutes);
 app.use('/api/organizations', organizationRoutes);
 app.use('/api/assets',        assetsRouter);
 app.use('/api/maintenance',   maintenanceRouter);
+app.use('/api/inventory',     inventoryRoutes);
 
 app.get('/api/test', (req, res) => {
     res.json({ message: 'StockNest Backend is Running!' });
