@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maintenance Management - StockNest</title>
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Management - StockNest</title>
+  <!-- ✅ CSS link matches your actual file name -->
+  <link rel="stylesheet" href="maintainance_page.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Top Bar -->
+  <!-- ===== TOP BAR ===== -->
   <header class="topbar">
     <div class="topbar-title">Maintenance Management</div>
     <div class="topbar-code">&lt;/&gt;</div>
@@ -18,7 +18,56 @@
 
   <div class="app">
 
-    <!-- Main Content -->
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">▦</div>
+        <div>
+          <div class="brand-name">StockNest</div>
+          <div class="brand-sub">Workspace Inventory</div>
+        </div>
+      </div>
+
+      <button class="switch-location">📍 Switch Location</button>
+
+      <nav class="nav">
+        <!-- Links point to your actual filenames from the project -->
+        <a href="dashboard.html" class="nav-item">
+          <span class="nav-icon">▦</span> Dashboard
+        </a>
+        <a href="organisation_page_html.html" class="nav-item">
+          <span class="nav-icon">🏢</span> Setup and locations
+        </a>
+        <a href="asset_registry.html" class="nav-item">
+          <span class="nav-icon">📦</span> Asset Registry
+        </a>
+        <a href="inventory.html" class="nav-item">
+          <span class="nav-icon">🗂</span> Inventory Management
+        </a>
+        <!-- Active page highlighted -->
+        <a href="maintainance_page_index.html" class="nav-item active">
+          <span class="nav-icon">🛠</span> Maintenance
+        </a>
+        <a href="room-booking.html" class="nav-item">
+          <span class="nav-icon">🚪</span> Room Booking
+        </a>
+        <a href="allocation.html" class="nav-item">
+          <span class="nav-icon">🔁</span> Room Allocation and Transfer
+        </a>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">📊</span> Analytics &amp; Reporting
+        </a>
+        <a href="#" class="nav-item">
+          <span class="nav-icon">⚙️</span> Settings
+        </a>
+      </nav>
+
+      <a href="#" class="help-center">
+        <span class="nav-icon">❓</span> Help Center
+      </a>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
     <main class="main">
 
       <!-- Search row -->
@@ -28,6 +77,7 @@
           <input type="text" placeholder="Search inventory, assets, tickets...">
           <span class="kbd">⌘K</span>
         </div>
+
         <div class="icon-btn-wrap">
           <button class="quick-add" id="quickAddBtn">+ Quick Add</button>
           <div class="dropdown" id="quickAddDropdown">
@@ -203,35 +253,25 @@
             </div>
 
             <div class="chart">
-              <div class="bar-wrap">
-                <div class="bar">
-                  <div class="bar-fill blue" style="height:55%"></div>
-                  <div class="bar-fill blue-light" style="height:25%"></div>
-                </div>
-              </div>
-              <div class="bar-wrap">
-                <div class="bar">
-                  <div class="bar-fill blue" style="height:20%"></div>
-                  <div class="bar-fill yellow" style="height:20%"></div>
-                </div>
-              </div>
-              <div class="bar-wrap">
-                <div class="bar">
-                  <div class="bar-fill blue" style="height:65%"></div>
-                  <div class="bar-fill blue-light" style="height:15%"></div>
-                </div>
-              </div>
-              <div class="bar-wrap">
-                <div class="bar">
-                  <div class="bar-fill pink" style="height:25%"></div>
-                </div>
-              </div>
-              <div class="bar-wrap">
-                <div class="bar">
-                  <div class="bar-fill blue" style="height:30%"></div>
-                  <div class="bar-fill blue-light" style="height:45%"></div>
-                </div>
-              </div>
+              <div class="bar-wrap"><div class="bar">
+                <div class="bar-fill blue" style="height:55%"></div>
+                <div class="bar-fill blue-light" style="height:25%"></div>
+              </div></div>
+              <div class="bar-wrap"><div class="bar">
+                <div class="bar-fill blue" style="height:20%"></div>
+                <div class="bar-fill yellow" style="height:20%"></div>
+              </div></div>
+              <div class="bar-wrap"><div class="bar">
+                <div class="bar-fill blue" style="height:65%"></div>
+                <div class="bar-fill blue-light" style="height:15%"></div>
+              </div></div>
+              <div class="bar-wrap"><div class="bar">
+                <div class="bar-fill pink" style="height:25%"></div>
+              </div></div>
+              <div class="bar-wrap"><div class="bar">
+                <div class="bar-fill blue" style="height:30%"></div>
+                <div class="bar-fill blue-light" style="height:45%"></div>
+              </div></div>
             </div>
             <div class="chart-baseline"></div>
           </section>
@@ -255,11 +295,11 @@
     </div>
   </div>
 
-  <!-- Delete Confirm Modal -->
+  <!-- Delete Modal -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal">
       <h3>Delete Service Entry</h3>
-      <p class="modal-sub">Are you sure you want to delete <strong id="deleteAssetName">-</strong>? This action cannot be undone.</p>
+      <p class="modal-sub">Are you sure you want to delete <strong id="deleteAssetName">-</strong>? This cannot be undone.</p>
       <div class="modal-actions">
         <button class="btn-secondary" id="deleteCancel">Cancel</button>
         <button class="btn-danger" id="deleteConfirm">Delete</button>
@@ -289,6 +329,7 @@
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
-  <script src="script.js"></script>
+  <!-- ✅ JS link matches your actual file name -->
+  <script src="maintainance_page.js"></script>
 </body>
 </html>
