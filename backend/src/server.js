@@ -1,30 +1,24 @@
 const express = require('express');
-const cors    = require('cors');
+const cors = require('cors');
 require('dotenv').config();
 
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/auth');
+// const inventoryRoutes = require('./routes/inventory');  // Will add later
 
-const app  = express();
-const PORT = process.env.PORT || 5000;
+const app = express();
 
-// ── Middleware ────────────────────────────────
 app.use(cors());
 app.use(express.json());
 
-// ── Routes ────────────────────────────────────
+// Routes
 app.use('/api/auth', authRoutes);
+// app.use('/api/inventory', inventoryRoutes);  // Will add later
 
-// Health check — useful for Render deployment
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'StockNest API is running ✅' });
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'StockNest Backend is Running!' });
 });
 
-// 404 handler for undefined routes
-app.use((req, res) => {
-  res.status(404).json({ message: `Route ${req.method} ${req.url} not found.` });
-});
-
-// ── Start server ──────────────────────────────
+const PORT = process.env.SERVER_PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 StockNest server running on http://localhost:${PORT}`);
+    console.log(`✅ Server running on http://localhost:${PORT}`);
 });
