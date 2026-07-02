@@ -138,9 +138,9 @@ const getMe = async (req, res) => {
   try {
     const result = await pool.query(
       'SELECT user_id, name, email, role, org_id, last_login, created_at FROM users WHERE user_id = $1',
-      [req.user.user_id]
+    [req.userId]  // ✅ CORRECT - matches middleware
     );
-
+    
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'User not found.' });
     }

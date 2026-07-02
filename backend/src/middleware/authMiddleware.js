@@ -1,53 +1,59 @@
-const jwt = require('jsonwebtoken');
+const { verifyToken } = require('../config/jwt');
 
-// ─────────────────────────────────────────────
-// verifyToken
-// Checks that a valid JWT is present in the
-// Authorization header. Attaches decoded user
-// info to req.user for downstream use.
-// ─────────────────────────────────────────────
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
+// Protect routes - verify JWT token
+const authMiddleware = (req, res, next) => {
+    try {
+        // Get token from headers
+        const token = req.headers.authorization?.split(' ')[1];
 
-  // Header must be: "Bearer <token>"
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Access denied. No token provided.' });
-  }
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: 'No token provided'
+            });
+        }
 
-  const token = authHeader.split(' ')[1];
+        // Verify token
+        const decoded = verifyToken(token);
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { user_id, email, role, org_id }
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token.' });
-  }
+        if (!decoded) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid or expired token'
+            });
+        }
+
+    
+        // Attach user info to request
+        req.userId = decoded.user_id;   // ✅ CORRECT - matches token
+        req.userEmail = decoded.email;
+        req.userRole = decoded.role;
+        req.orgId = decoded.org_id;
+
+        next();
+    } catch (error) {
+        res.status(401).json({
+            success: false,
+            message: 'Token verification failed',
+            error: error.message
+        });
+    }
 };
 
-// ─────────────────────────────────────────────
-// checkRole(...roles)
-// Use AFTER verifyToken.
-// Pass allowed roles as arguments.
-//
-// Example:
-//   router.delete('/asset/:id', verifyToken, checkRole('Admin'), deleteAsset)
-//   router.get('/inventory',    verifyToken, checkRole('Admin', 'Manager'), getInventory)
-// ─────────────────────────────────────────────
-const checkRole = (...roles) => {
-  return (req, res, next) => {
-    if (!req.user) {
-      return res.status(401).json({ message: 'Not authenticated.' });
-    }
-
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({
-        message: `Access denied. Required role: ${roles.join(' or ')}. Your role: ${req.user.role}`
-      });
-    }
-
-    next();
-  };
+// Check user role
+const checkRole = (allowedRoles) => {
+    return (req, res, next) => {
+        if (!allowedRoles.includes(req.userRole)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Access denied. Insufficient permissions'
+            });
+        }
+        next();
+    };
 };
 
-module.exports = { verifyToken, checkRole };
+module.exports = {
+    authMiddleware,
+    checkRole
+};
