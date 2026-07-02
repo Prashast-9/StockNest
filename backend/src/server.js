@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const authRoutes                        = require('./routes/authRoutes');
 const dashboardRoutes                   = require('./routes/dashboardRoutes');
+const organizationRoutes                = require('./routes/organizationRoutes');
 const { assetsRouter, maintenanceRouter } = require('./routes/assets');
 
 const app  = express();
@@ -14,10 +15,11 @@ app.use(cors());
 app.use(express.json());
 
 // ── Routes ────────────────────────────────────
-app.use('/api/auth',        authRoutes);
-app.use('/api/dashboard',   dashboardRoutes);
-app.use('/api/assets',      assetsRouter);
-app.use('/api/maintenance', maintenanceRouter);
+app.use('/api/auth',          authRoutes);
+app.use('/api/dashboard',     dashboardRoutes);
+app.use('/api/organizations', organizationRoutes);
+app.use('/api/assets',        assetsRouter);
+app.use('/api/maintenance',   maintenanceRouter);
 
 // Health check — useful for Render deployment
 app.get('/health', (req, res) => {
