@@ -4,181 +4,145 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StockNest — Asset Registry</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="asset_registry.css" />
 </head>
 <body>
-  <div class="app-layout">
+  <div class="app-shell">
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar__brand">
-        <div class="sidebar__logo">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-          </svg>
-        </div>
-        <div>
-          <div class="sidebar__title">StockNest</div>
-          <div class="sidebar__subtitle">WORKSPACE INVENTORY</div>
-        </div>
-      </div>
+    <aside id="sidebar-root" class="app-shell__sidebar"></aside>
 
-      <nav class="sidebar__nav">
-        <a href="#" class="sidebar__link">Dashboard</a>
-        <a href="#" class="sidebar__link">Setup and locations</a>
-        <a href="#" class="sidebar__link sidebar__link--active">Asset Registry</a>
-        <a href="#" class="sidebar__link">Inventory Management</a>
-        <a href="#" class="sidebar__link">Maintenance</a>
-        <a href="#" class="sidebar__link">Room Booking</a>
-        <a href="#" class="sidebar__link">Room Allocation and Transfer</a>
-        <a href="#" class="sidebar__link">Analytics &amp; Reporting</a>
-        <a href="#" class="sidebar__link">Settings</a>
-      </nav>
+    <div class="app-shell__main">
+      <div id="topbar-root" class="app-shell__topbar"></div>
 
-      <div class="sidebar__footer">
-        <button type="button" class="sidebar__switch-btn">Switch Location</button>
-        <a href="#" class="sidebar__help">Help Center</a>
-      </div>
-    </aside>
+      <div class="page-layout">
+        <main class="page-content asset-registry-page">
 
-    <!-- Main content -->
-    <div class="main-content">
-
-      <!-- Top bar -->
-      <header class="topbar">
-        <div class="topbar__search">
-          <input type="text" placeholder="Search assets, IDs, locations..." />
-          <kbd class="topbar__shortcut">⌘K</kbd>
-        </div>
-        <div class="topbar__actions">
-          <button type="button" class="topbar__quick-add">+ Quick Add</button>
-          <button type="button" class="topbar__icon-btn" aria-label="Notifications">
-            <span class="topbar__notification-dot"></span>
-            &#128276;
-          </button>
-          <div class="topbar__profile">
-            <span class="topbar__profile-name">Admin</span>
-            <div class="topbar__avatar">A</div>
+          <div class="page-header">
+            <div>
+              <h1 class="page-header__title">Asset Registry</h1>
+              <p class="page-header__subtitle">Manage and track physical inventory across all workspace zones.</p>
+            </div>
+            <div class="page-header__actions">
+              <button type="button" class="btn btn--outline" id="importBtn">Import</button>
+              <button type="button" class="btn btn--outline" id="scanBtn">Scan</button>
+              <button type="button" class="btn btn--outline" id="exportBtn">Export</button>
+              <button type="button" class="btn btn--primary" id="addAssetBtn">+ Add New Asset</button>
+            </div>
           </div>
-        </div>
-      </header>
 
-      <div class="page-body">
+          <div class="summary-cards">
+            <div class="summary-card">
+              <div class="summary-card__content">
+                <span class="summary-card__label">Total Assets</span>
+                <div class="summary-card__value-row">
+                  <span class="summary-card__value" id="totalAssets">0</span>
+                  <span class="summary-card__change">+<span id="weeklyChange">0</span></span>
+                </div>
+              </div>
+              <div class="summary-card__icon">&#9670; &#9632; &#9679;</div>
+            </div>
 
-        <!-- Page header -->
-        <div class="page-header">
-          <div>
-            <h1 class="page-header__title">Asset Registry</h1>
-            <p class="page-header__subtitle">Manage and track physical inventory across all workspace zones.</p>
-          </div>
-          <div class="page-header__actions">
-            <button type="button" class="btn btn--outline">Export</button>
-            <button type="button" class="btn btn--primary">+ Add New Asset</button>
-          </div>
-        </div>
-
-        <!-- Summary cards -->
-        <div class="summary-cards">
-          <div class="summary-card">
-            <div class="summary-card__content">
-              <span class="summary-card__label">Total Assets</span>
-              <div class="summary-card__value-row">
-                <span class="summary-card__value" id="totalAssets">1,428</span>
-                <span class="summary-card__change">+12</span>
+            <div class="summary-card summary-card--wide">
+              <div class="summary-card__content">
+                <span class="summary-card__label">Fleet Condition Index</span>
+                <div class="summary-card__value-row">
+                  <span class="summary-card__value" id="fleetIndex">0 / 100</span>
+                  <span class="summary-card__tag summary-card__tag--green">
+                    <span class="summary-card__dot"></span> Optimal
+                  </span>
+                </div>
+                <div class="fleet-bar" id="fleetBar"></div>
+                <div class="fleet-bar__legend" id="fleetLegend"></div>
               </div>
             </div>
-            <div class="summary-card__icon">&#9670; &#9632; &#9679;</div>
-          </div>
 
-          <div class="summary-card summary-card--wide">
-            <div class="summary-card__content">
-              <span class="summary-card__label">Fleet Condition Index</span>
-              <div class="summary-card__value-row">
-                <span class="summary-card__value">87.4 / 100</span>
-                <span class="summary-card__tag summary-card__tag--green">
-                  <span class="summary-card__dot"></span> Optimal
-                </span>
-              </div>
-              <div class="fleet-bar">
-                <div class="fleet-bar__segment fleet-bar__segment--critical" style="width:2%"></div>
-                <div class="fleet-bar__segment fleet-bar__segment--fair" style="width:10.6%"></div>
-                <div class="fleet-bar__segment fleet-bar__segment--good" style="width:87.4%"></div>
-              </div>
-              <div class="fleet-bar__legend">
-                <span>Critical: 2%</span>
-                <span>Fair: 10.6%</span>
-                <span>Good: 87.4%</span>
+            <div class="summary-card">
+              <div class="summary-card__content">
+                <span class="summary-card__label">Requires Maintenance</span>
+                <div class="summary-card__value-row">
+                  <span class="summary-card__value" id="maintCount">0</span>
+                  <span class="summary-card__warn">&#9888;</span>
+                </div>
+                <button type="button" class="summary-card__link" id="reviewTicketsBtn">Review Tickets →</button>
               </div>
             </div>
           </div>
 
-          <div class="summary-card">
-            <div class="summary-card__content">
-              <span class="summary-card__label">Requires Maintenance</span>
-              <div class="summary-card__value-row">
-                <span class="summary-card__value">28</span>
-                <span class="summary-card__warn">&#9888;</span>
+          <div class="asset-table-wrapper">
+            <div class="asset-filters">
+              <div class="asset-filters__search">
+                <input type="text" id="filterInput" placeholder="Filter by Name, ID, or Assigned User" />
+                <button type="button" class="filter-clear" id="clearSearchBtn" title="Clear search" aria-label="Clear search">×</button>
               </div>
-              <a href="#" class="summary-card__link">Review Tickets →</a>
+
+              <div class="filter-dropdown-wrap">
+                <button type="button" class="filter-dropdown" id="categoryFilterBtn">Category: All ▾</button>
+                <div class="filter-menu" id="categoryMenu" hidden></div>
+              </div>
+
+              <div class="filter-dropdown-wrap">
+                <button type="button" class="filter-dropdown" id="locationFilterBtn">Location: All Zones ▾</button>
+                <div class="filter-menu" id="locationMenu" hidden></div>
+              </div>
+
+              <div class="filter-dropdown-wrap">
+                <button type="button" class="filter-dropdown" id="statusFilterBtn">Status: All ▾</button>
+                <div class="filter-menu" id="statusMenu" hidden></div>
+              </div>
+
+              <button type="button" class="filter-advanced" id="advancedFilterBtn">Advanced</button>
+              <button type="button" class="filter-reset" id="resetFiltersBtn">Reset</button>
+            </div>
+
+            <div class="asset-table-scroll">
+              <table class="asset-table">
+                <thead>
+                  <tr>
+                    <th class="col-check"><input type="checkbox" id="selectAll" /></th>
+                    <th class="sortable" data-sort="name">Asset Details <span class="sort-indicator"></span></th>
+                    <th class="sortable" data-sort="id">System ID <span class="sort-indicator"></span></th>
+                    <th class="sortable" data-sort="category">Category <span class="sort-indicator"></span></th>
+                    <th class="sortable" data-sort="status">Status <span class="sort-indicator"></span></th>
+                    <th class="sortable" data-sort="assigned">Assigned To <span class="sort-indicator"></span></th>
+                    <th class="sortable" data-sort="condition">Condition <span class="sort-indicator"></span></th>
+                    <th class="sortable" data-sort="lastChecked">Last Checked <span class="sort-indicator"></span></th>
+                    <th class="col-actions">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="assetTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="asset-pagination">
+              <span class="asset-pagination__info" id="paginationInfo">Showing 0 entries</span>
+              <div class="asset-pagination__controls" id="paginationControls"></div>
             </div>
           </div>
-        </div>
 
-        <!-- Asset table -->
-        <div class="asset-table-wrapper">
-          <div class="asset-filters">
-            <div class="asset-filters__search">
-              <input
-                type="text"
-                id="filterInput"
-                placeholder="Filter by Name, ID, or Assigned User"
-              />
-            </div>
-            <button type="button" class="filter-dropdown">Category ▾</button>
-            <button type="button" class="filter-dropdown">Location: All Zones ▾</button>
-            <button type="button" class="filter-dropdown">Status ▾</button>
-            <button type="button" class="filter-advanced">Advanced</button>
-          </div>
-
-          <div class="asset-table-scroll">
-            <table class="asset-table">
-              <thead>
-                <tr>
-                  <th class="col-check"><input type="checkbox" id="selectAll" /></th>
-                  <th>Asset Details</th>
-                  <th>System ID</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                  <th>Assigned To</th>
-                  <th>Condition</th>
-                  <th>Last Checked</th>
-                  <th class="col-actions">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="assetTableBody">
-                <!-- Rows inserted by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-
-          <div class="asset-pagination">
-            <span class="asset-pagination__info" id="paginationInfo">Showing 1 to 4 of 1,428 entries</span>
-            <div class="asset-pagination__controls">
-              <button type="button" class="page-btn" disabled>‹</button>
-              <button type="button" class="page-btn page-btn--active">1</button>
-              <button type="button" class="page-btn">2</button>
-              <button type="button" class="page-btn">3</button>
-              <span class="page-ellipsis">…</span>
-              <button type="button" class="page-btn">357</button>
-              <button type="button" class="page-btn">›</button>
-            </div>
-          </div>
-        </div>
-
+        </main>
       </div>
     </div>
   </div>
 
-  <script src="asset_registry.js"></script>
+  <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+  <dialog class="registry-modal" id="registryModal">
+    <div class="registry-modal__header">
+      <h2 class="registry-modal__title" id="modalTitle">Modal</h2>
+      <button type="button" class="registry-modal__close" id="modalCloseBtn" aria-label="Close">&times;</button>
+    </div>
+    <div class="registry-modal__body" id="modalBody"></div>
+    <div class="registry-modal__footer" id="modalFooter"></div>
+  </dialog>
+
+  <div class="action-menu" id="actionMenu" hidden></div>
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script type="module" src="asset_registry.js"></script>
 </body>
 </html>
