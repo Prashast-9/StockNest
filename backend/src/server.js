@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const authRoutes = require('./routes/auth');
-// const inventoryRoutes = require('./routes/inventory');  // Will add later
+const authRoutes          = require('./routes/authRoutes');
+const dashboardRoutes     = require('./routes/dashboardRoutes');
+const organizationRoutes  = require('./routes/organizationRoutes');
 
 const app = express();
 
@@ -11,8 +12,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRoutes);
-// app.use('/api/inventory', inventoryRoutes);  // Will add later
+app.use('/api/auth',          authRoutes);
+app.use('/api/dashboard',     dashboardRoutes);
+app.use('/api/organizations', organizationRoutes);
 
 app.get('/api/test', (req, res) => {
     res.json({ message: 'StockNest Backend is Running!' });
