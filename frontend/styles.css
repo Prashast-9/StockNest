@@ -113,7 +113,7 @@ ul {
   overflow-y: auto;
 }
 
-.sidebar__brand {
+.sidebar__brand-container {
   padding: 0 20px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 0;
@@ -181,14 +181,14 @@ ul {
   pointer-events: none;
 }
 
-.sidebar__logo {
+.sidebar__logo-title {
   font-size: 20px;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.02em;
 }
 
-.sidebar__subtitle {
+.sidebar__subtitle-desc {
   font-size: 12px;
   color: var(--color-sidebar-text);
   margin-top: 2px;

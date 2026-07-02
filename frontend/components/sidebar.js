@@ -102,9 +102,9 @@ export function renderSidebar(container, { activeItem, location = 'HQ Alpha' } =
 
   container.innerHTML = `
     <nav class="sidebar" aria-label="Main navigation">
-      <a href="dashboard.html" class="sidebar__brand sidebar__brand-link" aria-label="StockNest home">
-        <h1 class="sidebar__logo">StockNest</h1>
-        <p class="sidebar__subtitle">Workspace Inventory</p>
+      <a href="dashboard.html" class="sidebar__brand-container sidebar__brand-link" aria-label="StockNest home">
+        <h1 class="sidebar__logo-title">StockNest</h1>
+        <p class="sidebar__subtitle-desc">Workspace Inventory</p>
       </a>
 
       <div class="sidebar__location">
