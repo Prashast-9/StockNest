@@ -1,5 +1,5 @@
 const express = require('express');
-const { verifyToken, checkRole } = require('../middleware/authMiddleware');
+const { authMiddleware, checkRole } = require('../middleware/authMiddleware');
 
 const {
   // Assets
@@ -23,7 +23,7 @@ const {
 const assetsRouter = express.Router();
 
 // All asset routes require a valid JWT
-assetsRouter.use(verifyToken);
+assetsRouter.use(authMiddleware);
 
 assetsRouter.get('/',    getAssets);                                  // GET    /api/assets
 assetsRouter.get('/:id', getAssetById);                               // GET    /api/assets/:id
@@ -38,7 +38,7 @@ assetsRouter.delete('/:id', checkRole('Admin'),         deleteAsset); // DELETE 
 const maintenanceRouter = express.Router();
 
 // All maintenance routes require a valid JWT
-maintenanceRouter.use(verifyToken);
+maintenanceRouter.use(authMiddleware);
 
 maintenanceRouter.get('/',    getMaintenance);                                       // GET    /api/maintenance
 maintenanceRouter.get('/:id', getMaintenanceById);                                   // GET    /api/maintenance/:id

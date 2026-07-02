@@ -30,6 +30,14 @@ const authMiddleware = (req, res, next) => {
         req.userRole = decoded.role;
         req.orgId = decoded.org_id;
 
+        // Backward compatibility for req.user nested format
+        req.user = {
+            user_id: decoded.user_id,
+            email: decoded.email,
+            role: decoded.role,
+            org_id: decoded.org_id
+        };
+
         next();
     } catch (error) {
         res.status(401).json({
@@ -41,7 +49,7 @@ const authMiddleware = (req, res, next) => {
 };
 
 // Check user role
-const checkRole = (allowedRoles) => {
+const checkRole = (...allowedRoles) => {
     return (req, res, next) => {
         if (!allowedRoles.includes(req.userRole)) {
             return res.status(403).json({
