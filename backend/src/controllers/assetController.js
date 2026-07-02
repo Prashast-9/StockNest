@@ -168,6 +168,9 @@ const updateAsset = async (req, res) => {
 const deleteAsset = async (req, res) => {
   const { id } = req.params;
   try {
+    // Delete associated maintenance records first to satisfy foreign key constraints
+    await pool.query('DELETE FROM maintenance WHERE asset_id = $1', [id]);
+
     const result = await pool.query(
       'DELETE FROM asset WHERE asset_id = $1 AND org_id = $2 RETURNING asset_id, name',
       [id, req.user.org_id]
